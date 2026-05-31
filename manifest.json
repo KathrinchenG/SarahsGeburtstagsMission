@@ -1,0 +1,23 @@
+{
+	"name": "Sarahs Geburtstagsmission",
+	"short_name": "Mission",
+	"start_url": "./index.html",
+	"display": "standalone",
+	"theme_color": "#b8862b",
+	"background_color": "#f6efe1",
+	"description": "Mobile, offline nutzbare Layton-Stil Schnitzeljagd.",
+	"icons": [
+		{
+			"src": "assets/icons/icon-192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any maskable"
+		},
+		{
+			"src": "assets/icons/icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any maskable"
+		}
+	]
+}

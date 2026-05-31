@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#b8862b">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+	<meta name="apple-mobile-web-app-title" content="Mission">
+	<title>Das Rätsel der verlorenen Erinnerungen</title>
+	<link rel="manifest" href="manifest.json">
+	<link rel="apple-touch-icon" sizes="192x192" href="assets/icons/icon-192.png">
+	<link rel="icon" href="assets/images/terminal.svg" type="image/svg+xml">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main class="book-shell">
+		<section id="introSequenceCard" class="paper-card intro-card hidden">
+			<div class="intro-sequence-frame">
+				<img
+					id="introSlideImage"
+					class="intro-slide-image"
+					src=""
+					alt="Einführungsbild"
+					loading="eager"
+				>
+			</div>
+			<div class="intro-action-bar">
+				<button id="introNextBtn" class="btn btn-gold" type="button">Weiter</button>
+			</div>
+		</section>
+
+		<section id="welcomeCard" class="paper-card intro-card">
+			<p class="small-number">MISSION</p>
+			<h1>Willkommen zur Mission</h1>
+			<p class="subtitle">Willkommen zur Mission. Löse jedes Rätsel, um den nächsten Ort zu finden.</p>
+			<button id="startBtn" class="btn btn-gold" type="button">Mission beginnen</button>
+		</section>
+
+		<section id="missionCard" class="paper-card riddle-page hidden" aria-live="polite">
+			<header class="riddle-head">
+				<div class="head-top">
+					<p id="riddleNumber" class="small-number riddle-number">RÄTSEL NR. 001</p>
+					<p id="progressText" class="progress-text">Station 1 von 5</p>
+				</div>
+				<h2 id="stationTitle" class="riddle-title">Das Rätsel der verlorenen Erinnerungen</h2>
+				<p id="stationSubtitle" class="subtitle riddle-subtitle">Nur wer sich selbst kennt, findet den Weg weiter.</p>
+				<div class="head-bottom">
+					<p id="pikaratBadge" class="pikarat">80 PIKARAT</p>
+					<button id="riddleResetBtn" class="btn btn-outline" type="button">Rätsel neu starten</button>
+					<button id="resetBtn" class="btn btn-outline" type="button">Spiel neu starten</button>
+				</div>
+			</header>
+
+			<div class="progress-wrap" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1">
+				<div id="progressBar" class="progress-bar"></div>
+			</div>
+
+			<p id="introText" class="intro-text riddle-intro"></p>
+			<p id="riddleText" class="riddle-text"></p>
+			<div id="textCodeContent" class="text-code-content hidden" aria-label="Rätseltext"></div>
+
+			<section id="crosswordArea" class="crossword-area hidden">
+				<div id="crosswordGrid" class="crossword" aria-label="Kreuzworträtsel"></div>
+				<button id="extractWordBtn" class="btn btn-outline hidden" type="button">Lösungswort übernehmen</button>
+			</section>
+
+			<section id="audioPuzzleArea" class="audio-puzzle-area hidden" aria-label="Audio-Rätsel">
+				<div id="audioTrackList" class="audio-track-list"></div>
+				<div id="audioWordSlots" class="audio-word-slots" aria-label="Lösungsbuchstaben"></div>
+				<p class="audio-helper-text">
+					Schreibe die sechs Buchstaben in der richtigen Reihenfolge auf. Das Lösungswort zeigt dir, wo du die nächste Spur findest.
+				</p>
+			</section>
+
+			<section id="mcPuzzleArea" class="mc-puzzle-area hidden" aria-label="Multiple-Choice-Rätsel">
+				<div id="mcQuestionList" class="mc-question-list"></div>
+				<div id="mcWordSlots" class="mc-word-slots" aria-label="Finales Lösungswort"></div>
+				<p id="mcHelperText" class="mc-helper-text">Trage die acht Buchstaben in der richtigen Reihenfolge hier ein.</p>
+			</section>
+
+			<section id="logicSeatingArea" class="logic-seating-area hidden" aria-label="Logikrätsel Sitzordnung">
+				<ol id="logicHintList" class="logic-hint-list"></ol>
+				<div id="logicSeatGrid" class="logic-seat-grid"></div>
+			</section>
+
+			<section id="clockPuzzleArea" class="clock-puzzle-area hidden" aria-label="Uhrenrätsel">
+				<div id="clockPuzzleGrid" class="clock-puzzle-grid"></div>
+				<p id="clockFinalHint" class="clock-final-hint">Where _ _ _ _ _ is found, there too watches the fish.</p>
+				<div id="clockFinalSlots" class="clock-final-slots" aria-label="Finales Lösungswort"></div>
+			</section>
+
+			<section id="cluesArea" class="clues clues-area hidden">
+				<div>
+					<h3>WAAGERECHT →</h3>
+					<ul id="acrossList" class="clue-list"></ul>
+				</div>
+				<div>
+					<h3>SENKRECHT ↓</h3>
+					<ul id="downList" class="clue-list"></ul>
+				</div>
+			</section>
+
+			<blockquote id="closingQuote" class="closing-quote riddle-quote hidden"></blockquote>
+
+			<label id="answerLabel" for="answerInput" class="field-label">Lösung eingeben</label>
+			<input id="answerInput" class="field-input" type="text" autocomplete="off" placeholder="Deine Antwort...">
+			<button id="checkAnswerBtn" class="btn btn-gold" type="button">Lösung prüfen</button>
+
+			<p id="feedback" class="feedback" aria-live="assertive"></p>
+
+			<div id="passwordPanel" class="password-panel hidden">
+				<p class="info">Richtig! Gehe zum neuen Ort.</p>
+				<p id="locationHint" class="location-hint"></p>
+				<label for="passwordInput" class="field-label">Passwort der nächsten Station</label>
+				<input id="passwordInput" class="field-input" type="text" autocomplete="off" placeholder="Passwort...">
+				<button id="unlockBtn" class="btn btn-gold" type="button">Station freischalten</button>
+			</div>
+		</section>
+
+		<section id="outroCard" class="outro-card hidden" aria-live="polite">
+			<div class="outro-scene">
+				<img id="outroImage" class="outro-image" src="" alt="Abschlussszene" loading="eager">
+				<div class="outro-dust" aria-hidden="true"></div>
+				<div id="outroConfetti" class="outro-confetti hidden" aria-hidden="true"></div>
+				<div class="outro-vignette" aria-hidden="true"></div>
+			</div>
+
+			<div class="outro-dialog-box">
+				<p id="outroSpeaker" class="outro-speaker hidden"></p>
+				<p id="outroText" class="outro-text"></p>
+				<h2 id="outroMissionTitle" class="outro-mission-title hidden">Mission abgeschlossen</h2>
+				<div class="outro-actions">
+					<button id="outroNextBtn" class="btn btn-gold" type="button">Weiter</button>
+					<button id="outroRestartBtn" class="btn btn-gold hidden" type="button">Spiel neu starten</button>
+				</div>
+			</div>
+		</section>
+
+		<section id="completeCard" class="paper-card hidden">
+			<p class="small-number">MISSION ABGESCHLOSSEN</p>
+			<h2>Mission abgeschlossen.</h2>
+			<p>Alle Erinnerungen wurden gefunden.</p>
+			<button id="playAgainBtn" class="btn btn-gold" type="button">Noch einmal spielen</button>
+		</section>
+	</main>
+
+	<script src="data/riddles.js"></script>
+	<script src="app.js"></script>
+</body>
+</html>
